@@ -1,38 +1,10 @@
 from PIL import Image
 from math import log
 from imgOperation import ndg
+from imgOperation import printMat
+from imgOperation import initMatrix
+from imgOperation import coccurrenceZero
 
-def coccurrenceZero(matrix,cols,rows):
-    """
-     calcul cocurance de matrix
-    :param matrix:
-    :param cols: column de matrix
-    :param rows: ligne de matrix
-    :return:
-    """
-    rowMax = max(max(matrix))
-    result = [[ 0 for x in range(rowMax+1)] for x in range(rowMax+1)]
-    for x in range(cols):
-       for y in range(rows-1):
-           valx = matrix[x][y]
-           valy = matrix[x][y+1]
-           if matrix[x][y] == matrix[x][y+1]:
-               result[valx][valy] += 1
-           result[valx][valy] += 1
-    printMat(result)
-    return result
-
-def printMat (matrix):
-    """
-    affiche le contenu de la matrice
-    :param matrix: list()
-    """
-    for x in range(len(matrix)):
-       print(matrix[x])
-
-def initMatrix(matrix,cols,rows):
-    matrix = [[0 for x in range(cols)] for y in range(rows)]
-    return matrix
 
 def inergie(matrix,rows,cols):
     """
@@ -73,8 +45,8 @@ def entropie(matrix,rows,cols):
     result = float()
     for x in range(cols):
         for y in range(rows):
-            if log(matrix[x][y],10)> 0:
-                result += log(matrix[x][y]) * matrix[x][y]
+            if log(matrix[y][x],10)> 0:
+                result += log(matrix[y][x]) * matrix[y][x]
     return result
 
 def momentDiffInverse(matrix,rows,cols):
@@ -93,7 +65,12 @@ def momentDiffInverse(matrix,rows,cols):
 
 img = Image.open("C://Users/shous/Desktop/test.jpg")
 
-m = ndg(img)
+
+m = ndg(img,8)
+printMat(m)
+print('\n')
+m = coccurrenceZero(m)
+##printMat(m)
 
 """
 def coccurrence(matrix,cols,rows):
@@ -127,4 +104,3 @@ print('moument deffi inverse coccurrence 0 degre')
 print(momentDiffInverse(m,8,8))
 """
 
-printMat(m)

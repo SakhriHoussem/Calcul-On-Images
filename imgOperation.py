@@ -1,4 +1,30 @@
 
+def coccurrenceZero(matrix):
+    """
+     calcul cocurance de matrix
+    :param matrix:
+    :param cols: column de matrix
+    :param rows: ligne de matrix
+    :return:
+    """
+    result = list
+    rows = len(matrix)
+    cols = len(matrix[0])
+    rowMax = max(max(matrix))
+    result = initMatrix(result,rowMax,rowMax)
+    for y in range(rows):
+       for x in range(cols-1):
+           vx = matrix[y][x]
+           vy = matrix[y][x+1]
+           print("matrix",y,',',x,':',vx)
+           result[vy][vx] += 1
+           print("result",vy,",",vx,":",result[vx][vy] )
+           if matrix[y][x] == matrix[y][x+1]:
+               result[vy][vx] += 1
+    return result
+
+
+
 # reduce Vector
 def reduce(color):
     '''
@@ -30,10 +56,9 @@ def getRedVector(img):
     :return:
     '''
     cols,rows = img.size
-    print(rows,'*',cols)
     vect = [0 for x in range(256)]
-    for x in range(cols):
-        for y in range(rows):
+    for y in range(rows):
+        for x in range(cols):
             val=img.getpixel((x,y))
             rgb = val[2]
             vect[rgb] += 1
@@ -49,8 +74,8 @@ def getBlueVector(img):
     '''
     cols,rows = img.size
     vect = [0 for x in range(256)]
-    for x in range(cols):
-        for y in range(rows):
+    for y in range(rows):
+        for x in range(cols):
             val=img.getpixel((x, y))
             rgb = val[0]
             vect[rgb] += 1
@@ -66,11 +91,9 @@ def getGreenVector(img):
     '''
 
     cols, rows = img.size
-    print(cols,' ',rows)
-    print(range(rows))
     vect = [0 for x in range(256)]
-    for x in range(cols):
-        for y in range(rows):
+    for y in range(rows):
+        for x in range(cols):
             val = img.getpixel((x, y))
             rgb = val[1]
             vect[rgb] += 1
@@ -82,8 +105,8 @@ def printMat (matrix):
     affiche le contenu de la matrice
     :param matrix: list()
     """
-    for x in range(len(matrix)):
-       print(matrix[x])
+    for row in range(len(matrix)):
+       print(matrix[row])
 
 def distance(histo1,histo2):
     '''
@@ -92,7 +115,6 @@ def distance(histo1,histo2):
     :param histo2: list()
     :return: int()
     '''
-    i=0
     denominateur=0
     som = 0
     for i in range(len(histo1)):
@@ -115,13 +137,12 @@ def ndg(img,t = False):
     :return: list()
     """
     cols, rows = img.size
-    print(cols,'*',rows)
     mat = list()
-    mat = initMatrix(mat,rows,cols) # init matrix a 0
-    for x in range(rows):
-        for y in range(cols):
-            val = img.getpixel((y,x))
-            mat[y][x] = int(val[2]*0.299+val[1]*0.587+val[0]*0.114)
+    mat = initMatrix(mat,cols,rows) # init matrix a 0
+    for y in range(rows):
+        for x in range(cols):
+            val = img.getpixel((x,y))
+            mat[y][x] = int(val[0]*0.299+val[1]*0.587+val[1]*0.114)
             if t != 0:
-                mat[x][y] = int(mat[x][y]*t/256)
+                mat[y][x] = int(mat[y][x]*t/256)
     return mat
