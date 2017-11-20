@@ -1,40 +1,47 @@
-
 from PIL import Image
 from math import log
+from imgOperation import ndg
 
+def coccurrenceZero(matrix,cols,rows):
+    """
+     calcul cocurance de matrix
+    :param matrix:
+    :param cols: column de matrix
+    :param rows: ligne de matrix
+    :return:
+    """
+    rowMax = max(max(matrix))
+    result = [[ 0 for x in range(rowMax+1)] for x in range(rowMax+1)]
+    for x in range(cols):
+       for y in range(rows-1):
+           valx = matrix[x][y]
+           valy = matrix[x][y+1]
+           if matrix[x][y] == matrix[x][y+1]:
+               result[valx][valy] += 1
+           result[valx][valy] += 1
+    printMat(result)
+    return result
+
+def printMat (matrix):
+    """
+    affiche le contenu de la matrice
+    :param matrix: list()
+    """
+    for x in range(len(matrix)):
+       print(matrix[x])
 
 def initMatrix(matrix,cols,rows):
     matrix = [[0 for x in range(cols)] for y in range(rows)]
     return matrix
 
-def ndg(matrix,rows,cols,t = False):
-    '''
-        calculer niveau de gris avce T
-    :param matrix: list()
-    :param rows: int()
-    :param cols: int()
-    :param t: bool()
-    :return: list()
-    '''
-
-    mat = list()
-    mat = initMatrix(mat,cols,rows) # init matrix a 0
-    for x in range(cols):
-        for y in range(rows):
-            val = matrix[x, y]
-            mat[x][y] = int(val[2]*0.299+val[1]*0.587+val[0]*0.114)
-            if t != 0:
-                mat[x][y] = int(mat[x][y]*t/256)
-    return mat
-
 def inergie(matrix,rows,cols):
-    '''
+    """
     calculer l inergie dune matrice
     :param matrix: list()
     :param rows: int()
     :param cols: int()
     :return: float()
-    '''
+    """
     result = float()
     for x in range(cols):
         for y in range(rows):
@@ -42,13 +49,13 @@ def inergie(matrix,rows,cols):
     return result
 
 def inertie(matrix, rows, cols):
-    '''
+    """
     calculer l inertie dune matrice
     :param matrix: list()
     :param rows: int()
     :param cols: int()
     :return: float()
-    '''
+    """
     result = float()
     for x in range(cols):
         for y in range(rows):
@@ -56,44 +63,68 @@ def inertie(matrix, rows, cols):
     return result
 
 def entropie(matrix,rows,cols):
-    '''
+    """
     calculer l entropie dune matrice
     :param matrix: list()
     :param rows: int()
     :param cols: int()
     :return: float()
-    '''
+    """
     result = float()
     for x in range(cols):
         for y in range(rows):
-            result += matrix[x][y]*log(matrix[x][y])
-    return -result
+            if log(matrix[x][y],10)> 0:
+                result += log(matrix[x][y]) * matrix[x][y]
+    return result
 
 def momentDiffInverse(matrix,rows,cols):
-    '''
+    """
     calculer l moment Differentiel Inverse d'une matrice
     :param matrix: list()
     :param rows: int()
     :param cols: int()
     :return: float()
-    '''
+    """
     result = float()
     for x in range(cols):
         for y in range(rows):
             result += 1/(1+(x-y)**2)*matrix[x][y]
     return result
 
-img = Image.open("C://Users/shous/Desktop/houssem.jpg")
-pix = img.load()
-cols, rows = img.size
-m= ndg(pix, cols, rows,8)
-v = img.getpixel((1, 1))
+img = Image.open("C://Users/shous/Desktop/test.jpg")
+
+m = ndg(img)
+
+"""
+def coccurrence(matrix,cols,rows):
+
+    rowMax = max(max(matrix))
+    result = [[ 0 for x in range(rowMax+1)] for x in range(rowMax+1)]
+    for x in range(cols):
+       for y in range(rows-1):
+           valx = matrix[x][y]
+           valy = matrix[x+1][y]
+           if matrix[x][y] == matrix[x][y+1]:
+               result[valx][valy] += 1
+           result[valx][valy] += 1
+    printMat(result)
+    return result
+
+print('matrice coccurrence 0 degre')
+m = coccurrenceZero(m,cols,rows)
 
 
+print('inertie coccurrence 0 degre')
+print(inertie(m,8,8))
 
+print('energie coccurrence 0 degre')
+print(inergie(m,8,8))
 
-for x in range(rows):
-   print(m[x])
+print('entropie coccurrence 0 degre')
+print(entropie(m,8,8))
 
+print('moument deffi inverse coccurrence 0 degre')
+print(momentDiffInverse(m,8,8))
+"""
 
-
+printMat(m)
