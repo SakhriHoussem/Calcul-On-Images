@@ -4,7 +4,6 @@ import imgOperation as op
 img = Image.open("img/test.jpg")
 img2 = Image.open("img/test.jpg")
 
-
 Green=op.getGreenVector(img)
 Rouge=op.getRedVector(img)
 Bleu=op.getBlueVector(img)

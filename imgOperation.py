@@ -34,7 +34,7 @@ def getRedVector(img):
     vect = [0 for x in range(256)]
     for x in range(cols):
         for y in range(rows):
-            val=img.getpixel((x, y))
+            val=img.getpixel((x,y))
             rgb = val[2]
             vect[rgb] += 1
     return vect
@@ -47,10 +47,10 @@ def getBlueVector(img):
     :param cols:
     :return:
     '''
-    rows,cols = img.size
+    cols,rows = img.size
     vect = [0 for x in range(256)]
-    for x in range(rows):
-        for y in range(cols):
+    for x in range(cols):
+        for y in range(rows):
             val=img.getpixel((x, y))
             rgb = val[0]
             vect[rgb] += 1
@@ -66,6 +66,8 @@ def getGreenVector(img):
     '''
 
     cols, rows = img.size
+    print(cols,' ',rows)
+    print(range(rows))
     vect = [0 for x in range(256)]
     for x in range(cols):
         for y in range(rows):
