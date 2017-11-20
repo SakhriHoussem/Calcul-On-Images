@@ -10,15 +10,14 @@ def coccurrenceZero(matrix):
     result = list
     rows = len(matrix)
     cols = len(matrix[0])
-    rowMax = max(max(matrix))
-    result = initMatrix(result,rowMax,rowMax)
+    rowMax = findMax(matrix)
+    print("max : ",rowMax)
+    result = initMatrix(result,rowMax+1,rowMax+1)
     for y in range(rows):
        for x in range(cols-1):
            vx = matrix[y][x]
            vy = matrix[y][x+1]
-           print("matrix",y,',',x,':',vx)
            result[vy][vx] += 1
-           print("result",vy,",",vx,":",result[vx][vy] )
            if matrix[y][x] == matrix[y][x+1]:
                result[vy][vx] += 1
     return result
@@ -107,6 +106,8 @@ def printMat (matrix):
     """
     for row in range(len(matrix)):
        print(matrix[row])
+def findMax(matrix):
+    return max(max(x) for x in matrix)
 
 def distance(histo1,histo2):
     '''

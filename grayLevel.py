@@ -70,7 +70,7 @@ m = ndg(img,8)
 printMat(m)
 print('\n')
 m = coccurrenceZero(m)
-##printMat(m)
+printMat(m)
 
 """
 def coccurrence(matrix,cols,rows):
